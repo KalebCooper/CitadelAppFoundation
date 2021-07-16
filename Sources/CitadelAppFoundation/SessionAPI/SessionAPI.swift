@@ -14,7 +14,9 @@ public protocol SessionAPI {
     func resume()
     func resignActive()
     func stop()
-    
+}
+
+public protocol AppSessionAPI: SessionAPI {
     var analyticsSession: AnalyticsSessionAPI { get }
     var authenticationSession: AuthenticationSessionAPI { get }
     var userSession: UserSessionAPI { get }

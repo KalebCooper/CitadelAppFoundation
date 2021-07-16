@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  AppTrackingPermission.swift
 //  
 //
 //  Created by Kaleb Cooper on 7/3/21.

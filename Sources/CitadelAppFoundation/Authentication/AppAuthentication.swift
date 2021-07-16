@@ -8,7 +8,6 @@
 import Combine
 
 public protocol AppAuthentication {
-    
     func create()
     func authenticate()
     func unauthenticate()

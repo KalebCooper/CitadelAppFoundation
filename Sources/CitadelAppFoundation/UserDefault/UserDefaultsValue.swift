@@ -7,30 +7,13 @@
 
 import Foundation
 
-public protocol UserDefaultsRetrievable {
-//    var type: UserDefaultsType { get }
-}
-
-
-
-public enum UserDefaultsValue: UserDefaultsRetrievable {
-    
-    case string(_ value: String?)
-    case double(_ value: Double?)
-    case bool(_ value: Bool?)
-    case int(_ value: Int?)
-    
-//    public var type: UserDefaultsType {
-//        switch self {
-//
-//        case .string:
-//            return .string
-//        case .double:
-//            return .double
-//        case .bool:
-//            return .bool
-//        case .int:
-//            return .int
-//        }
-//    }
+public enum UserDefaultsValue {
+    case bool(_ value: Bool)
+    case date(_ value: Date)
+    case dictionary(_ value: [String: Any])
+    case double(_ value: Double)
+    case empty
+    case integer(_ value: Int)
+    case float(_ value: Float)
+    case string(_ value: String)
 }
