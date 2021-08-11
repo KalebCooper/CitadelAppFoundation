@@ -39,7 +39,11 @@ public class AppStoreManager {
 
     private static func presentReviewPrompt(deadline: DispatchTime = .now() + 1.5) {
         DispatchQueue.main.asyncAfter(deadline: deadline) {
-            SKStoreReviewController.requestReview()
+            if let scene = UIApplication.shared.connectedScenes.first(
+                where: { $0.activationState == .foregroundActive }
+            ) as? UIWindowScene {
+                SKStoreReviewController.requestReview(in: scene)
+            }
         }
     }
 }

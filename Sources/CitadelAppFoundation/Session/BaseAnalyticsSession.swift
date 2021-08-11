@@ -1,36 +1,32 @@
 //
-//  File.swift
+//  BaseAnalyticsSession.swift
 //  
 //
-//  Created by Kaleb Cooper on 6/28/21.
+//  Created by Kaleb Cooper on 7/19/21.
 //
 
 import Collections
 import Combine
 import Foundation
 
-public protocol AnalyticsSessionAPI: SessionAPI {
-    var analytics: AppAnalytics { get }
-}
-
-open class AnalyticsSession: AnalyticsSessionAPI {
+public class BaseAnalyticsSession: AnalyticsSessionAPI {
     
     //----------------------------------------------------------------
     // MARK: - Public API
     //----------------------------------------------------------------
     
-    /// Singleton instance
-    public static var shared: SessionAPI = AnalyticsSession()
-    private init() {
+    public typealias Session = BaseAnalyticsSession
+    public static var shared: BaseAnalyticsSession = BaseAnalyticsSession()
+    
+    public init() {
         // Kick off any Analytic processes
         listenToEvents()
+        start()
     }
     
-    /// App Analytics instance for the Session.
+    
     public let analytics: AppAnalytics = AppAnalytics.app
     
-    ///Contains an `OrderedDictionary` ordered by `Date`.
-    ///Reperesents the entire history of `AppEvents` that were fired during the given Session
     public var eventHistory: OrderedDictionary<Date, AppEvent> = [:]
     
     open func start() {
@@ -55,15 +51,30 @@ open class AnalyticsSession: AnalyticsSessionAPI {
     
     private var subscribers: Set<AnyCancellable> = []
     
-    private func listenToEvents() {
+    public func listenToEvents() {
         analytics.latestEvent.sink { [weak self] event in
             self?.keepRecordOf(event)
         }
         .store(in: &subscribers)
     }
     
-    private func keepRecordOf(_ event: AppEvent) {
-        eventHistory[Date()] = event
+    public func keepRecordOf(_ event: AppEvent, at date: Date = Date()) {
+        eventHistory[date] = event
+    }
+    
+}
+
+
+
+class AnalyticsSession: BaseAnalyticsSession {
+//    public static var app: SessionAPI = KanDoAnalyticsSession()
+    
+    init(test: String) {
+        
+    }
+    
+    override func start() {
+        
     }
     
 }

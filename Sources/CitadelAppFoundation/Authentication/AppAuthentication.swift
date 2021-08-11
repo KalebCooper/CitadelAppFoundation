@@ -13,7 +13,7 @@ public protocol AppAuthentication {
     func unauthenticate()
     func delete()
     
-    var auth: CurrentValueSubject<AppAuth, Never> { get set }
+    var auth: CurrentValueSubject<AuthState, Never> { get set }
     var subscribers: Set<AnyCancellable> { get set }
 }
 public extension AppAuthentication {

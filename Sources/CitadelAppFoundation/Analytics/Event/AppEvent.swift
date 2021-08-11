@@ -18,7 +18,7 @@ public protocol AppEvent {
 // MARK: - Base App Event
 //----------------------------------------------------------------
 
-public enum BaseAppEvent: AppEvent {
+public enum AppFoundationEvent: AppEvent {
     
     case analyticsStartup
     

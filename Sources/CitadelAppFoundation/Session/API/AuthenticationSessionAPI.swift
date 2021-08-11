@@ -8,7 +8,7 @@
 import Combine
 
 public protocol AuthenticationSessionAPI: SessionAPI {
-    var appAuth: CurrentValueSubject<AppAuth, Never> { get set }
+    associatedtype State: AuthStateAPI
     
-    var subscribers: Set<AnyCancellable> { get set }
+    var authState: CurrentValueSubject<State, Never> { get set }
 }

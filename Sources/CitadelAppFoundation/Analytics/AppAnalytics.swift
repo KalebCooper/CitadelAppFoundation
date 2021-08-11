@@ -12,7 +12,7 @@ public class AppAnalytics {
     //----------------------------------------------------------------
     // MARK: - App Singleton
     //----------------------------------------------------------------
-    public static let app = AppAnalytics(BaseAppEvent.analyticsStartup)
+    public static let app = AppAnalytics(AppFoundationEvent.analyticsStartup)
     private init(_ initialEvent: AppEvent) {
         latestEvent = CurrentValueSubject(initialEvent)
     }
@@ -27,7 +27,7 @@ public class AppAnalytics {
     // MARK: - Log
     //----------------------------------------------------------------
     
-    public func log(_ event: AppEvent, with logger: AnalyticsLogger = UserDefaultsAnalytics.logger) {
+    public func log(_ event: AppEvent, with logger: AnalyticsLogger = UserDefaultsAnalyticsLogger.logger) {
         latestEvent.send(event)
         logger.log(event)
     }

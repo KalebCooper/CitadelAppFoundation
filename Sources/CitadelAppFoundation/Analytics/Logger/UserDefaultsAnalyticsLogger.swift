@@ -1,5 +1,5 @@
 //
-//  UserDefaultsAnalytics.swift
+//  UserDefaultsAnalyticsLogger.swift
 //  
 //
 //  Created by Kaleb Cooper on 7/16/21.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-public class UserDefaultsAnalytics: AnalyticsLogger {
-    public static var logger: AnalyticsLogger = UserDefaultsAnalytics()
+public class UserDefaultsAnalyticsLogger: AnalyticsLogger {
+    public static var logger: AnalyticsLogger = UserDefaultsAnalyticsLogger()
     private init() { }
     
     private let userDefaults: AppUserDefaults = AppUserDefaults.app

@@ -7,4 +7,14 @@
 
 import Foundation
 
-open class AppUser { }
+public protocol AppUserRepresentable: Identifiable {
+    init(guestWith id: String)
+}
+
+open class AppUser: AppUserRepresentable {
+    public let id: String
+    
+    public required init(guestWith id: String) {
+        self.id = id
+    }
+}

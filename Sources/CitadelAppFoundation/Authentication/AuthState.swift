@@ -7,6 +7,13 @@
 
 import Foundation
 
-public protocol AuthState {
+public protocol AuthStateAPI {
     // TODO: Setup protocol requirements
+}
+
+public enum AuthState: AuthStateAPI {
+    case appLaunch
+    case guest
+    case authenticated
+    case unauthenticated
 }
