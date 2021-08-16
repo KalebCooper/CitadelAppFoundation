@@ -33,7 +33,7 @@ open class BaseUserSession: UserSessionAPI {
         start()
     }
     
-    public func update(user: AppUser) {
+    open func update(user: AppUser) {
         self.user.send(user)
     }
     
@@ -41,19 +41,19 @@ open class BaseUserSession: UserSessionAPI {
     // MARK: - Session API
     //----------------------------------------------------------------
     
-    public func start() {
+    open func start() {
         
     }
     
-    public func resume() {
+    open func resume() {
         
     }
     
-    public func resignActive() {
+    open func resignActive() {
         
     }
     
-    public func stop() {
+    open func stop() {
         
     }
     

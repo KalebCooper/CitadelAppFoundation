@@ -28,19 +28,19 @@ open class BaseAuthenticationSession: AuthenticationSessionAPI {
         return auth
     }()
     
-    public func start() {
+    open func start() {
         
     }
     
-    public func resume() {
+    open func resume() {
         
     }
     
-    public func resignActive() {
+    open func resignActive() {
         
     }
     
-    public func stop() {
+    open func stop() {
         
     }
     

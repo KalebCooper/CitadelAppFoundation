@@ -12,6 +12,7 @@ open class BaseAppSession: SessionAPI {
     //----------------------------------------------------------------
     // MARK: - Public API
     //----------------------------------------------------------------
+    
     public typealias Session = BaseAppSession
     public static var shared: BaseAppSession = BaseAppSession()
     
@@ -19,19 +20,19 @@ open class BaseAppSession: SessionAPI {
         start()
     }
     
-    public func start() {
+    open func start() {
         
     }
     
-    public func resume() {
+    open func resume() {
         
     }
     
-    public func resignActive() {
+    open func resignActive() {
         
     }
     
-    public func stop() {
+    open func stop() {
         
     }
     

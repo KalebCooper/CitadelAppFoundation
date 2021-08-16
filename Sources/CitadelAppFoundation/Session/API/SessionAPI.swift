@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol SessionAPI {
+public protocol SessionAPI: ObservableObject {
     
     associatedtype Session: SessionAPI
     /// Singleton instance
@@ -18,7 +18,3 @@ public protocol SessionAPI {
     func resignActive()
     func stop()
 }
-
-//public protocol AppSessionAPI: SessionAPI {
-//    static var shared: SessionAPI { get }
-//}

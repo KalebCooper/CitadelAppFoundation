@@ -8,6 +8,7 @@
 #if os(iOS)
 import UIKit
 
+
 class AppHaptics {
     
     static let shared = AppHaptics()
