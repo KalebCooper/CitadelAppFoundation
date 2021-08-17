@@ -8,15 +8,15 @@
 import SwiftUI
 
 public struct AppColor {
-    var dark: Color
     var light: Color
+    var dark: Color
     
     func color(in scheme: ColorScheme = .light) -> Color {
         switch scheme {
-        case .dark:
-            return dark
         case .light:
             return light
+        case .dark:
+            return dark
         default:
             return light
         }
