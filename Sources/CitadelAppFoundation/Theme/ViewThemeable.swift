@@ -8,7 +8,7 @@
 import SwiftUI
 
 public protocol ViewThemeable {
-    associatedtype ThemeSession: ThemeSessionAPI
-    var themeSession: ThemeSession { get }
+    associatedtype Session: ThemeSessionAPI
+    var themeSession: Session { get }
     var envScheme: ColorScheme { get }
 }
