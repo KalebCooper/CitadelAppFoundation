@@ -18,22 +18,20 @@ open class BaseThemeSession: ThemeSessionAPI {
     public typealias BaseTheme = AppTheme
     public typealias Session = BaseThemeSession
     
-    public static var shared: BaseThemeSession = BaseThemeSession()
+    public static var shared: BaseThemeSession = getSharedSession()
     
     /// Do not set this directly
     @Published public var appTheme: AppTheme
     /// Do not set this directly
-    @Published public var appColorScheme: ColorScheme?
+    @Published public var appColorScheme: ColorScheme
     
-    public init(defaultTheme: AppTheme = AppTheme(), defaultScheme: ColorScheme? = .none) {
+    public init(defaultTheme: AppTheme = AppTheme(), defaultScheme: ColorScheme) {
         self.appTheme = defaultTheme
         self.appColorScheme = defaultScheme
         self.themePublisher = CurrentValueSubject(defaultTheme)
-        self.schemePublisher = CurrentValueSubject(defaultScheme)
+        self.colorSchemePublisher = CurrentValueSubject(defaultScheme)
         
         self.defaultAppTheme = defaultTheme
-        // Default to light mode if all else fails
-        self.defaultAppColorScheme = defaultScheme ?? .light
         start()
     }
     
@@ -43,14 +41,20 @@ open class BaseThemeSession: ThemeSessionAPI {
         }
         .store(in: &subscribers)
         
-        schemePublisher.sink { [weak self] scheme in
-            guard let self = self else {
-                return
+        colorSchemePublisher
+            .dropFirst(1)
+            .debounce(for: 1.0, scheduler: DispatchQueue.main)
+            .sink { [weak self] scheme in
+                guard let self = self else {
+                    return
+                }
+                
+                // Default to system setting
+                let newScheme = scheme ?? self.currentSystemScheme
+                self.appTheme.scheme = newScheme
+                self.appColorScheme = newScheme
             }
-            self.appTheme.scheme = scheme ?? self.defaultAppColorScheme
-            self.appColorScheme = scheme
-        }
-        .store(in: &subscribers)
+            .store(in: &subscribers)
     }
     
     open func resume() {
@@ -69,7 +73,7 @@ open class BaseThemeSession: ThemeSessionAPI {
         themePublisher.send(theme)
     }
     open func update(to scheme: ColorScheme?) {
-        schemePublisher.send(scheme)
+        colorSchemePublisher.send(scheme)
     }
     
     //----------------------------------------------------------------
@@ -77,10 +81,22 @@ open class BaseThemeSession: ThemeSessionAPI {
     //----------------------------------------------------------------
     
     private let defaultAppTheme: AppTheme
-    private let defaultAppColorScheme: ColorScheme
+    private lazy var currentSystemScheme: ColorScheme = {
+        return BaseThemeSession.currentSystemScheme
+    }()
     
+    private var colorSchemePublisher: CurrentValueSubject<ColorScheme?, Never>
     private var themePublisher: CurrentValueSubject<AppTheme, Never>
-    private var schemePublisher: CurrentValueSubject<ColorScheme?, Never>
     private var subscribers: Set<AnyCancellable> = []
+    
+    private static var currentSystemScheme: ColorScheme {
+        return (UITraitCollection.current.userInterfaceStyle == .dark)
+            ? ColorScheme.dark
+            : ColorScheme.light
+    }
+    private static func getSharedSession() -> BaseThemeSession {
+        // Eventually, check preference from AppStorage or UserDefaults and inject here
+        return BaseThemeSession(defaultScheme: currentSystemScheme)
+    }
     
 }
