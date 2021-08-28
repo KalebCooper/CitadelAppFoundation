@@ -13,7 +13,8 @@ public protocol ThemeSessionAPI: SessionAPI {
     associatedtype BaseTheme = AppTheme
     
     var appTheme: BaseTheme { get }
-    var appColorScheme: ColorScheme { get set }
+    var currentScheme: ColorScheme { get set }
+    var userSchemeSelection: ColorScheme? { get }
     
 //    func color(
     func update(to theme: BaseTheme)

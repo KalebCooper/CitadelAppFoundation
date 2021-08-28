@@ -23,15 +23,19 @@ open class BaseThemeSession: ThemeSessionAPI {
     /// Do not set this directly
     @Published public var appTheme: AppTheme
     /// Do not set this directly
-    @Published public var appColorScheme: ColorScheme
+    @Published public var currentScheme: ColorScheme
+    public var userSchemeSelection: ColorScheme?
     
-    public init(defaultTheme: AppTheme = AppTheme(), defaultScheme: ColorScheme) {
+    public init(defaultTheme: AppTheme, userSchemeSelection: ColorScheme?) {
         self.appTheme = defaultTheme
-        self.appColorScheme = defaultScheme
         self.themePublisher = CurrentValueSubject(defaultTheme)
-        self.colorSchemePublisher = CurrentValueSubject(defaultScheme)
         
-        self.defaultAppTheme = defaultTheme
+        let startingScheme = userSchemeSelection ?? BaseThemeSession.currentSystemScheme
+        
+        self.currentScheme = startingScheme
+        self.userSchemeSelection = userSchemeSelection
+        self.colorSchemePublisher = CurrentValueSubject(startingScheme)
+        
         start()
     }
     
@@ -52,7 +56,7 @@ open class BaseThemeSession: ThemeSessionAPI {
                 // Default to system setting
                 let newScheme = scheme ?? self.currentSystemScheme
                 self.appTheme.scheme = newScheme
-                self.appColorScheme = newScheme
+                self.currentScheme = newScheme
             }
             .store(in: &subscribers)
     }
@@ -80,7 +84,6 @@ open class BaseThemeSession: ThemeSessionAPI {
     // MARK: - Private API
     //----------------------------------------------------------------
     
-    private let defaultAppTheme: AppTheme
     private lazy var currentSystemScheme: ColorScheme = {
         return BaseThemeSession.currentSystemScheme
     }()
@@ -96,7 +99,7 @@ open class BaseThemeSession: ThemeSessionAPI {
     }
     private static func getSharedSession() -> BaseThemeSession {
         // Eventually, check preference from AppStorage or UserDefaults and inject here
-        return BaseThemeSession(defaultScheme: currentSystemScheme)
+        return BaseThemeSession(defaultTheme: AppTheme(), userSchemeSelection: nil)
     }
     
 }
