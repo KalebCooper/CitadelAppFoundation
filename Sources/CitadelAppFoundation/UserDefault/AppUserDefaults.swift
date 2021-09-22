@@ -49,11 +49,6 @@ open class AppUserDefaults {
     }
 }
 
-public struct User: Codable {
-    let name: String
-}
-
-
 //----------------------------------------------------------------
 // MARK: - Custom Objects
 //----------------------------------------------------------------
