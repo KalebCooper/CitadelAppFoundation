@@ -43,10 +43,10 @@ open class BaseThemeSession: ThemeSessionAPI {
     @AppStorage("ThemeUserDefaults.userColorSchemePreference.key")
     public var appStorageSchemePreference: Int = 0 // System default
     
-    private var colorSchemePublisher: CurrentValueSubject<ColorScheme?, Never>
+    private var colorSchemePublisher: CurrentValueSubject<AppColorScheme, Never>
     
-    static let darkModeEnabled = Notification.Name("com.yourApp.notifications.darkModeEnabled")
-    static let darkModeDisabled = Notification.Name("com.yourApp.notifications.darkModeDisabled")
+    let darkModeEnabled = Notification.Name("com.yourApp.notifications.darkModeEnabled")
+    let darkModeDisabled = Notification.Name("com.yourApp.notifications.darkModeDisabled")
     
     
     //----------------------------------------------------------------
@@ -59,19 +59,19 @@ open class BaseThemeSession: ThemeSessionAPI {
     // MARK: - Initializer
     //----------------------------------------------------------------
     
-    public init(defaultTheme: AppTheme, initialScheme: ColorScheme?) {
+    public init(defaultTheme: AppTheme, initialScheme: AppColorScheme) {
         self.appTheme = defaultTheme
         self.themePublisher = CurrentValueSubject(defaultTheme)
         
-        self.userSchemePreference = AppColorScheme.system
-        self.systemScheme = .light
+        self.userSchemePreference = initialScheme
+        self.systemScheme = initialScheme.asColorScheme ?? .light
         self.colorSchemePublisher = CurrentValueSubject(initialScheme)
         
         start()
     }
     deinit {
-        NotificationCenter.default.removeObserver(self, name: .darkModeEnabled, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .darkModeDisabled, object: nil)
+        NotificationCenter.default.removeObserver(self, name: darkModeEnabled, object: nil)
+        NotificationCenter.default.removeObserver(self, name: darkModeDisabled, object: nil)
     }
     
     //----------------------------------------------------------------
@@ -94,7 +94,7 @@ open class BaseThemeSession: ThemeSessionAPI {
                 guard let self = self else {
                     return
                 }
-                
+                self.userSchemePreference = scheme
             }
             .store(in: &subscribers)
     }
@@ -115,23 +115,39 @@ open class BaseThemeSession: ThemeSessionAPI {
         themePublisher.send(theme)
     }
     open func update(to scheme: AppColorScheme) {
-//        colorSchemePublisher.send(scheme)
+        colorSchemePublisher.send(scheme)
     }
     
     public func setupSystemSchemeNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(darkModeEnabled(_:)), name: .darkModeEnabled, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(darkModeDisabled(_:)), name: .darkModeDisabled, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(darkModeEnabledAction),
+            name: darkModeEnabled,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(darkModeDisabledAction),
+            name: darkModeDisabled,
+            object: nil
+        )
     }
     
     //----------------------------------------------------------------
     // MARK: - Private API
     //----------------------------------------------------------------
     
-    private func
+    @objc private func darkModeEnabledAction() {
+        systemScheme = .dark
+    }
+
+    @objc private func darkModeDisabledAction() {
+        systemScheme = .light
+    }
 
     private static func getSharedSession() -> BaseThemeSession {
         // Eventually, check preference from AppStorage or UserDefaults and inject here
-        return BaseThemeSession(defaultTheme: AppTheme(), initialScheme: nil)
+        return BaseThemeSession(defaultTheme: AppTheme(), initialScheme: .system)
     }
     
 }

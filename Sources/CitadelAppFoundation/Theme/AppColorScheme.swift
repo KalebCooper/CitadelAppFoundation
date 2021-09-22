@@ -13,7 +13,7 @@ public enum AppColorScheme {
     case light
     case dark
     
-    var asColorScheme: ColorScheme? {
+    public var asColorScheme: ColorScheme? {
         switch self {
         case .system:
             return nil
@@ -26,7 +26,7 @@ public enum AppColorScheme {
     
     #if !os(macOS)
     
-    var asUIUserInterfaceStyle: UIUserInterfaceStyle {
+    public var asUIUserInterfaceStyle: UIUserInterfaceStyle {
         switch self {
         case .system:
             return .unspecified
