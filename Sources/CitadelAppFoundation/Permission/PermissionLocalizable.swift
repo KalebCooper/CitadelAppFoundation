@@ -51,4 +51,31 @@ public enum PermissionLocalizable: Localizable {
             return "permission-siri-title"
         }
     }
+
+    public var comment: String {
+        switch self {
+        case .camera:
+            return "permission-camera-title"
+        case .contacts:
+            return "permission-contacts-title"
+        case .events:
+            return "permission-events-title"
+        case .health:
+            return "permission-health-title"
+        case .microphone:
+            return "permission-microphone-title"
+        case .notifications:
+            return "permission-notifications-title"
+        case .photos:
+            return "permission-photos-title"
+        case .location:
+            return "permission-location-title"
+        case .mediaLibrary:
+            return "permission-mediaLibrary-title"
+        case .speechRecognizer:
+            return "permission-speechRecognizer-title"
+        case .siri:
+            return "permission-siri-title"
+        }
+    }
 }

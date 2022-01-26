@@ -8,8 +8,12 @@
 #if os(iOS)
 import UIKit
 
+public protocol Haptics {
+    func generate(type: HapticType, priority: HapticPriority)
+}
 
-class AppHaptics {
+
+public class AppHaptics: Haptics {
     
     static let shared = AppHaptics()
     private init() { }

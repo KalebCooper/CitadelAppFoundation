@@ -9,4 +9,5 @@ import Foundation
 
 public protocol Localizable {
     var titleKey: String { get }
+    var comment: String { get }
 }

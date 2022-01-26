@@ -15,7 +15,7 @@ public enum PrintType: String {
     case debug = "🎯"
 }
 open class Printer {
-    private static let iconLineLength: Int = 40
+    private static let iconLineLength: Int = 8
     
     public static func print(_ message: String = "", type: PrintType = .debug, from source: AnyObject? = nil, extraPadding: Bool = false) {
         var iconLine: String = ""

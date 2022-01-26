@@ -18,7 +18,7 @@ open class BaseThemeSession: ThemeSessionAPI {
     public typealias BaseTheme = AppTheme
     public typealias Session = BaseThemeSession
     
-    public static var shared: BaseThemeSession = getSharedSession()
+    public static var shared: BaseThemeSession = BaseThemeSession(defaultTheme: AppTheme(), initialScheme: .system)
     
     //----------------------------------------------------------------
     // MARK: - Theme
@@ -143,11 +143,6 @@ open class BaseThemeSession: ThemeSessionAPI {
 
     @objc private func darkModeDisabledAction() {
         systemScheme = .light
-    }
-
-    private static func getSharedSession() -> BaseThemeSession {
-        // Eventually, check preference from AppStorage or UserDefaults and inject here
-        return BaseThemeSession(defaultTheme: AppTheme(), initialScheme: .system)
     }
     
 }

@@ -6,41 +6,42 @@
 //
 
 import Foundation
-open class AppLocale {
+
+
+public protocol LocalizationStore {
+    func get(_ localizable: Localizable) -> String
+    func get(_ localizable: DescriptiveLocalizable) -> (title: String, description: String)
+    func get(_ localizable: AccessibleLocalizable) -> (title: String, accessibilityDescription: String)
+    func get(_ localizable: InclusiveLocalizable) -> (title: String, description: String, accessibilityDescription: String)
+}
+
+open class AppLocale: LocalizationStore {
+
     /// get string for key
     /// allow modifier like get with capital, all caps, all lowercase, max length, etc
-    public static func get(_ localizable: Localizable, _ comment: String = "") -> String {
-        return NSLocalizedString(localizable.titleKey, comment: comment)
+    public func get(_ localizable: Localizable) -> String {
+        return NSLocalizedString(localizable.titleKey, comment: localizable.comment)
     }
     
-    public static func getDescription(
-        _ localizable: DescriptiveLocalizable,
-        _ comment: String = ""
-    ) -> (title: String, description: String) {
+    public func get(_ localizable: DescriptiveLocalizable) -> (title: String, description: String) {
         return (
-            title: NSLocalizedString(localizable.titleKey, comment: comment),
-            description: NSLocalizedString(localizable.descriptionKey, comment: comment)
+            title: NSLocalizedString(localizable.titleKey, comment: localizable.comment),
+            description: NSLocalizedString(localizable.descriptionKey, comment: localizable.comment)
         )
     }
-    
-    public static func getAccessibleDescription(
-        _ localizable: AccessibleLocalizable,
-        _ comment: String = ""
-    ) -> (title: String, accessibilityDescription: String) {
+
+    public func get(_ localizable: AccessibleLocalizable) -> (title: String, accessibilityDescription: String) {
         return (
-            title: NSLocalizedString(localizable.titleKey, comment: comment),
-            accessibilityDescription: NSLocalizedString(localizable.accessibleDescriptionKey, comment: comment)
+            title: NSLocalizedString(localizable.titleKey, comment: localizable.comment),
+            accessibilityDescription: NSLocalizedString(localizable.accessibleDescriptionKey, comment: localizable.comment)
         )
     }
-    
-    public static func getAll<T: DescriptiveLocalizable & AccessibleLocalizable>(
-        _ localizable: T,
-        _ comment: String = ""
-    ) -> (title: String, description: String, accessibilityDescription: String) {
+
+    public func get(_ localizable: InclusiveLocalizable) -> (title: String, description: String, accessibilityDescription: String) {
         return (
-            title: NSLocalizedString(localizable.titleKey, comment: comment),
-            description: NSLocalizedString(localizable.descriptionKey, comment: comment),
-            accessibilityDescription: NSLocalizedString(localizable.accessibleDescriptionKey, comment: comment)
+            title: NSLocalizedString(localizable.titleKey, comment: localizable.comment),
+            description: NSLocalizedString(localizable.descriptionKey, comment: localizable.comment),
+            accessibilityDescription: NSLocalizedString(localizable.accessibleDescriptionKey, comment: localizable.comment)
         )
     }
 }
