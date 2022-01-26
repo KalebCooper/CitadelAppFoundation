@@ -15,10 +15,7 @@ public protocol Haptics {
 
 public class AppHaptics: Haptics {
     
-    static let shared = AppHaptics()
-    private init() { }
-    
-    func generate(type: HapticType, priority: HapticPriority) {
+    public func generate(type: HapticType, priority: HapticPriority) {
         let tapGen = UISelectionFeedbackGenerator()
         tapGen.prepare()
         
