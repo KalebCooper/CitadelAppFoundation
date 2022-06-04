@@ -26,27 +26,27 @@ public enum AppPermission {
         switch self {
         
         case .camera:
-            return AppLocale().get(PermissionLocalizable.camera)
+            return AppLocalizationStore().get(PermissionLocalizable.camera)
         case .contacts:
-            return AppLocale().get(PermissionLocalizable.contacts)
+            return AppLocalizationStore().get(PermissionLocalizable.contacts)
         case .events:
-            return AppLocale().get(PermissionLocalizable.events)
+            return AppLocalizationStore().get(PermissionLocalizable.events)
         case .health:
-            return AppLocale().get(PermissionLocalizable.health)
+            return AppLocalizationStore().get(PermissionLocalizable.health)
         case .location:
-            return AppLocale().get(PermissionLocalizable.location)
+            return AppLocalizationStore().get(PermissionLocalizable.location)
         case .microphone:
-            return AppLocale().get(PermissionLocalizable.microphone)
+            return AppLocalizationStore().get(PermissionLocalizable.microphone)
         case .notifications:
-            return AppLocale().get(PermissionLocalizable.notifications)
+            return AppLocalizationStore().get(PermissionLocalizable.notifications)
         case .photos:
-            return AppLocale().get(PermissionLocalizable.photos)
+            return AppLocalizationStore().get(PermissionLocalizable.photos)
 //        case .mediaLibrary:
-//            return AppLocale().get(PermissionLocalizable.mediaLibrary)
+//            return AppLocalizationStore().get(PermissionLocalizable.mediaLibrary)
 //        case .speechRecognizer:
-//            return AppLocale().get(PermissionLocalizable.speechRecognizer)
+//            return AppLocalizationStore().get(PermissionLocalizable.speechRecognizer)
         case .siri:
-            return AppLocale().get(PermissionLocalizable.siri)
+            return AppLocalizationStore().get(PermissionLocalizable.siri)
         
         }
     }

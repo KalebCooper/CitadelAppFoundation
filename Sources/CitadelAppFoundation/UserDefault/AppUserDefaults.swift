@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-open class AppUserDefaults {
+public class AppUserDefaults {
     
     public static let app = AppUserDefaults()
     private init() { }

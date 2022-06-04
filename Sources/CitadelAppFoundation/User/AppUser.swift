@@ -8,10 +8,14 @@
 import Foundation
 
 public protocol AppUserRepresentable: Identifiable {
+
+}
+
+public protocol GuestUserRepresentable: AppUserRepresentable {
     init(guestWith id: String)
 }
 
-open class AppUser: AppUserRepresentable {
+public class AppUser: AppUserRepresentable {
     public let id: String
     
     public required init(guestWith id: String) {
