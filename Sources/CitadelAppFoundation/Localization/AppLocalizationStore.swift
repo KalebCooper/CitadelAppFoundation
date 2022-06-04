@@ -17,6 +17,8 @@ public protocol LocalizationStore {
 
 public class AppLocalizationStore: LocalizationStore {
 
+    public init() {}
+
     /// get string for key
     /// allow modifier like get with capital, all caps, all lowercase, max length, etc
     public func get(_ localizable: Localizable) -> String {
