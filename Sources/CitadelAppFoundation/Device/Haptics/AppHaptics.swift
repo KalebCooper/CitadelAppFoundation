@@ -8,14 +8,15 @@
 #if os(iOS)
 import UIKit
 
-public protocol Haptics {
-    func generate(type: HapticType, priority: HapticPriority)
+public protocol Haptics: Sendable {
+    func generate(type: HapticType, priority: HapticPriority) async
 }
 
 
-public class AppHaptics: Haptics {
-    
-    public func generate(type: HapticType, priority: HapticPriority) {
+public final class AppHaptics: Haptics {
+
+    @MainActor
+    public func generate(type: HapticType, priority: HapticPriority) async {
         let tapGen = UISelectionFeedbackGenerator()
         tapGen.prepare()
         

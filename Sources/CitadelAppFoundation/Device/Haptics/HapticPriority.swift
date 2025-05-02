@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum HapticPriority {
+public enum HapticPriority: Sendable {
     case low
     case normal
     case high

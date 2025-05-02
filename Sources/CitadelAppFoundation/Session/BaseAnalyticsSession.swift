@@ -9,6 +9,7 @@ import Collections
 import Combine
 import Foundation
 
+@MainActor
 public class BaseAnalyticsSession: AnalyticsSessionAPI {
     
     //----------------------------------------------------------------
@@ -16,7 +17,7 @@ public class BaseAnalyticsSession: AnalyticsSessionAPI {
     //----------------------------------------------------------------
     
     public typealias Session = BaseAnalyticsSession
-    public static var shared: BaseAnalyticsSession = BaseAnalyticsSession()
+    public static let shared: BaseAnalyticsSession = BaseAnalyticsSession()
     
     public init() {
         // Kick off any Analytic processes
@@ -64,13 +65,12 @@ public class BaseAnalyticsSession: AnalyticsSessionAPI {
     
 }
 
-
-
+@MainActor
 class AnalyticsSession: BaseAnalyticsSession {
 //    public static var app: SessionAPI = KanDoAnalyticsSession()
     
     init(test: String) {
-        
+        super.init()
     }
     
     override func start() {

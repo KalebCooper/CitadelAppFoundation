@@ -8,6 +8,7 @@
 import Collections
 import Foundation
 
+@MainActor
 public protocol AnalyticsSessionAPI: SessionAPI {
     /// App Analytics instance for the Session.
     var analytics: AppAnalytics { get }

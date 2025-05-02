@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum HapticType {
+public enum HapticType: Sendable {
     case tap
     case success
     case warning

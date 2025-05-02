@@ -7,8 +7,9 @@
 
 import Foundation
 
+@MainActor
 public class UserDefaultsAnalyticsLogger: AnalyticsLogger {
-    public static var logger: AnalyticsLogger = UserDefaultsAnalyticsLogger()
+    public static let logger: AnalyticsLogger = UserDefaultsAnalyticsLogger()
     private init() { }
     
     private let userDefaults: AppUserDefaults = AppUserDefaults.app

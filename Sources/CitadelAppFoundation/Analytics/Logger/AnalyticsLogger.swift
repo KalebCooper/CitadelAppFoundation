@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 public protocol AnalyticsLogger {
     static var logger: AnalyticsLogger { get }
     func log(_ event: AppEvent)

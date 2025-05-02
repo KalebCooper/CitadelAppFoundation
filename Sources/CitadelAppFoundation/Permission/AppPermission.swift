@@ -51,6 +51,7 @@ public enum AppPermission {
         }
     }
     
+    @MainActor
     public func hasRequestedBefore() -> Bool {
         let hasRequested: Bool? = AppUserDefaults.app.get(keyable: hasRequestedKey)
         return hasRequested ?? false

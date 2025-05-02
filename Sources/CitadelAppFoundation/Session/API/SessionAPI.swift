@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 public protocol SessionAPI: ObservableObject {
     
     associatedtype Session: SessionAPI
