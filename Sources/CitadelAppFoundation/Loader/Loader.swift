@@ -11,30 +11,48 @@ import Foundation
 // MARK: Loaders
 
 /// Main `Loader` interface
-public protocol Loader {
-    var state: LoadableState { get }
+@MainActor
+public protocol Loader: Sendable {
+    var state: any LoadableState { get }
     var delay: Double { get }
     var minimumDuration: Double { get }
 
     func load(task: Task<(), Never>) async
     func load(task: Task<(), Never>) async -> Task<(), Never>
-
+    func cancel()
 }
+
+extension Loader {
+    public var delay: Double {
+        return 0.0
+    }
+    
+    public var minimumDuration: Double {
+        return 0.0
+    }
+    
+    public func cancel() { }
+}
+
 /// A `Loader` that has a configurable delay (before a loading callback),
 /// with a minimum duration to remain in a loading state if entered.
-public protocol IndefiniteLoader {}
+@MainActor
+public protocol IndefiniteLoader: Sendable {}
 /// Extends a `Loader` to allow for a retry mechanism
-public protocol RetryableLoader {}
+@MainActor
+public protocol RetryableLoader: Sendable {}
 
-public protocol LoadableState {
+@MainActor
+public protocol LoadableState: Sendable {
     var isLoading: Bool { get }
 }
 
+@MainActor
 public class TestLoader: Loader {
-    public var state: LoadableState = LoaderState.idle
+    public var state: any LoadableState = LoaderState.idle
 
     public func load(task: Task<(), Never>) async {
-        return await load(task: task)
+        // Empty implementation for testing
     }
     public func load(task: Task<(), Never>) async -> Task<(), Never> {
         return task
@@ -42,12 +60,10 @@ public class TestLoader: Loader {
 
     public var delay: Double = 1.0
     public var minimumDuration: Double = 1.0
-
-
 }
 
+@MainActor
 struct TestGuy {
-
     func test() async {
         await load() {
             print("Loading complete")
@@ -64,9 +80,8 @@ struct TestGuy {
     }
 }
 
-
+@MainActor
 public enum LoaderState: LoadableState, Equatable {
-
     public var isLoading: Bool {
         return self == .loadingThreshold || self == .loading
     }

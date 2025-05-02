@@ -14,8 +14,8 @@ import Photos
 #endif
 import UserNotifications
 
-
-public class Permissions {
+@MainActor
+public class Permissions: Sendable {
     public static let app = Permissions()
     
     //----------------------------------------------------------------

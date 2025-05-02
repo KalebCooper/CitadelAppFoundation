@@ -8,7 +8,8 @@
 import Combine
 import Foundation
 
-public class AppUserDefaults {
+@MainActor
+public class AppUserDefaults: Sendable {
     
     public static let app = AppUserDefaults()
     private init() { }

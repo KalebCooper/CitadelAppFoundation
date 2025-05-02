@@ -8,7 +8,8 @@
 import Foundation
 import StoreKit
 
-public class AppStoreManager {
+@MainActor
+public class AppStoreManager: Sendable {
     
     //----------------------------------------------------------------
     // MARK: - Review Prompt
