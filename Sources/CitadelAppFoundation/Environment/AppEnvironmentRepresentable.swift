@@ -23,6 +23,7 @@ public protocol AppEnvironmentRepresentable {
     var appBuild: String { get }
     
     #if os(iOS)
+    @MainActor
     var deviceType: UIUserInterfaceIdiom { get }
     #endif
 }
