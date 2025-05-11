@@ -13,16 +13,16 @@ import UIKit
 public protocol AppEnvironmentRepresentable {
     associatedtype Version: Versionable
     
-    static var env: AppEnvironmentConfig { get }
+    var env: AppEnvironmentConfig { get }
     
-    static var appName: String { get }
-    static var bundleId: String { get }
-    static var appIcon: String { get }
+    var appName: String { get }
+    var bundleId: String { get }
+    var appIcon: String { get }
     
-    static var appVersion: Version { get }
-    static var appBuild: String { get }
+    var appVersion: Version { get }
+    var appBuild: String { get }
     
     #if os(iOS)
-    static var deviceType: UIUserInterfaceIdiom { get }
+    var deviceType: UIUserInterfaceIdiom { get }
     #endif
 }

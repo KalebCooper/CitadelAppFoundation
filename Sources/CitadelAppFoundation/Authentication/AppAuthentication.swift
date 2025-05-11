@@ -7,16 +7,16 @@
 
 import Combine
 
-public protocol AppAuthentication {
-    func create()
-    func authenticate()
-    func unauthenticate()
-    func delete()
-    
-    var auth: CurrentValueSubject<AuthState, Never> { get set }
-    var subscribers: Set<AnyCancellable> { get set }
-}
-public extension AppAuthentication {
-    func resetPassword() { }
-    func authenticateAsGuest() { }
-}
+//public protocol AppAuthentication {
+//    func create()
+//    func authenticate()
+//    func unauthenticate()
+//    func delete()
+//    
+//    var auth: CurrentValueSubject<AuthState, Never> { get set }
+//    var subscribers: Set<AnyCancellable> { get set }
+//}
+//public extension AppAuthentication {
+//    func resetPassword() { }
+//    func authenticateAsGuest() { }
+//}
